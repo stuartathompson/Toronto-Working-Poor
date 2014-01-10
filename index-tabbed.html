@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+/* ----------- Global CSS ----------- */
+body, html{
+	margin:0;
+	width:940px;
+	overflow:hidden;
+}
+.clearfloat{
+	clear:both;
+}
+a{
+	text-decoration:none;
+	color:#FF0000;
+	outline:none;
+}
+a:hover{
+	text-decoration:underline;
+}
+/* ----------- Google Map ----------- */
+#map_canvas{
+	width:670px;
+	height:100%;
+	float:left;
+}
+#map-container{
+	font-family:Arial, Helvetica, Tahoma, sans-serif;
+	font-size:12px;
+	width:920px;
+	height: 605px;
+	position:relative;
+}
+#map_canvas h4{
+    margin:10px 0 5px 0;
+}
+    #map_canvas h3{
+    border-bottom: 1px solid #ECECEC;
+    font-family: 'PrattRegular',sans-serif;
+    margin: 10px 0 5px;
+    padding: 0 0 10px;
+    }
+/* ----------- Player Controls ----------- */
+#pause{
+	display:none;
+}
+.hashmark{
+    float: right;
+    height: 14px;
+    margin-top: 20px;
+    position: relative;
+	font-size: 10px;
+	text-align:center;
+}
+#hashmarks{
+    float: left;
+    margin: 0 auto 0 25px;
+    width: 800px;
+}
+#title-holder{
+	   text-align:center;
+	   font-family:helvetica, arial, sans-serif;
+	   color:Gray;
+	   font-size:12px;
+	   width:100%;
+	   clear:both;
+	   margin:15px 0;
+}
+#slider{
+	margin:0 auto;
+	background-image:url('images/slider-bg.png');
+    height: 12px;
+    position: relative;
+    width: 920px;
+    z-index: 0;
+	background-position: 99.9% 50%;
+}
+#slider{
+	width:600px;
+	position: relative;
+}
+	#slideMe{
+		border:1px solid black;
+		padding:10px;
+		position: absolute;
+	}
+/* ----------- Header ----------- */
+#map-header{
+	font-family: 'PrattHeavy',Georgia,'Times New Roman',serif;
+	width:100%;
+	float:left;
+}
+#tab-container{
+	float:left;
+	width:100%;
+}
+.tab{
+    border-right: 1px solid #ECECEC;
+    float: left;
+    height:70px;
+    width:165px;
+}
+    .tab-first{
+        border-left: 1px solid #ECECEC;
+        width:164px;
+    }
+	.tab a{
+    border-top: 1px solid #ECECEC;
+    background-color:#F7F7F7;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    height: 100%;
+    line-height: 3.5;
+    text-align: center;
+    width: 100%;
+
+	}
+        .tab a:hover{
+            text-decoration:none;
+			border-top:1px solid #c7c7c7;
+        }
+    .tab-sub{
+        width:100%;
+        text-align:center;
+        color:#a8a8a8;
+        margin-top:-26px;
+        font-size:11px;
+    }
+    .tab a.selected{
+		border-top:1px solid #c7c7c7 !important;
+		background-color:white;
+    }
+    .tab-drawtools{
+        width:150px;
+        overflow:hidden;
+    }
+	.tab-zoom{
+		border-top:1px solid #ececec;
+		width:252px;
+	}
+	.tab-zoom h3{
+		margin:0px;
+		font-weight:normal;
+	}
+#l{
+    background-color: #FF0000;
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 166px;
+    z-index: 9999;
+}
+/* ----------- Legend ----------- */
+#legend-container{
+    border-left: 1px solid #ECECEC;
+	border-top: 1px solid #ECECEC;
+    color: #333333;
+    float: left;
+    height: 100%;
+    padding: 0 10px;
+    width: 228px;
+    z-index: 10;
+	font-size: 12px;
+    line-height: 1.5;
+}
+#legend-container hr{
+	border:1px solid #f2f2f2
+}
+#legend-container > div{
+    padding:10px;
+}
+.legend-label{
+    color: #EEEEEE;
+}
+#legend-container li, #legend-container ul,#legend-colours ul, #legend-colours li{
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-top: 3px;
+    padding-left: 10px;
+	list-style-type:none;
+}
+    #legend-colours div{
+        width:15px;
+        height:15px;
+        float:left;
+        margin-right:3px;
+    }
+    #legend-colours{
+    background: none repeat scroll 0 0 white;
+    bottom: 0;
+    left: 10px;
+    padding: 10px;
+    width: 208px;
+    z-index: 99999;
+    }
+    #legend-colours .colour0{
+        background-color:#ffe486;
+    }
+    #legend-colours .colour1{
+        background-color:#ffae00;
+    }
+    #legend-colours .colour2{
+        background-color:#ff0000;
+    }
+    #legend-colours .colour3{
+        background-color:#701d1d;
+    }
+    #legend-colours .colour4{
+        background-color:#2c0606;
+    }
+    #legend-colours .colour5{
+        background-color:#007eff;
+    }
+#legend-container ol{
+	padding:0 0 0 13px;
+	margin:0;
+}
+#legend-container ol li{
+	margin:0 0 0 5px;
+	padding:0;
+}
+#legend-container a{
+    color:#FF0000;
+    text-decoration:none;
+}
+    #legend-container a:hover{
+        text-decoration:underline;
+    }
+/* -- Legend > Filters -- */
+#legend-container h2, #legend-container h3{
+    margin:10px 0 5px 0;
+    font-family:'PrattRegular', sans-serif;
+}
+.filter-box{
+    float:left;
+    width:100%;
+    border-bottom:1px solid #ececec;
+    padding:0 0 10px 0;
+}
+hr{
+    border-color:#ececec;
+    background:none;
+}
+.filter-injury ul{
+    margin:0;
+    padding:0;
+}
+.filter-injury li{
+    margin: 0 3x;
+    padding:0 0 0 10px;
+    list-style-type:none;
+}
+.filter-box li.selected{
+    background-image:url('arrow.png');
+    background-repeat:no-repeat;
+    background-position:0px 7px;
+}
+    #filter-zoom{
+        float:left;
+		margin: 10px 20px;
+		margin: 15px 20px;
+    }
+    #filter-zoom input{
+    color: #A8A8A8;
+    float: left;
+    font-size: 10px;
+    margin-top: 3px;
+    padding: 3px;
+    width: 178px;
+    }
+        #filter-zoom small{
+            clear:both;
+            display:block;
+        }
+        .zoom{
+            background-image: url("zoom.png");
+            background-position: 3px 4px;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            float: left;
+            height: 15px;
+            margin: 3px 1px 1px;
+            padding: 2px;
+            width: 15px;
+        }
+#legend-colours{
+	display:block !important;
+}
+.legend2{
+    display:none;
+}  
+.filter-tip{
+    text-align:center;
+    margin-bottom: 9px;
+}
+/* -- Legend > User -- */
+#legend-user, #legend-guide, #legend-raw{
+    display:none;
+    float:left;
+    width:209px;
+}
+#success-message{
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 150px;
+	color:green;
+	font-family:"PrattRegular", Arial, Helvetica, sans-serif;
+}
+/* --- User Form -- */
+.user-label{
+    font-family:"PrattHeavy", Arial, Helvetica, sans-serif;
+}
+.inner-user-form{
+    width:214px;
+	position:relative;
+}
+/* -- Legend > Guide -- */
+#legend-guide{
+	width:229px;
+	overflow:hidden;
+}
+#slide-container{
+	width:9000px;
+	margin-top:10px;
+}
+.legend-guide{
+    float: left;
+    padding-right: 40px;
+    width: 207px;
+	position:absolute;
+}
+	#legend-guide > div{
+		display:none;
+		width:207px;
+	}
+		#legend-guide .active{
+			display:block;
+		}
+		.legend-slide ul, .legend-slide li{
+			padding:0 !important;
+			margin:0 !important;
+		}
+/* ------ Credits ------ */ 
+.tgam-credits{
+	color: #666666;
+    float: left;
+    margin: 0;
+    padding: 0;
+	text-transform:uppercase;
+	width:100%;
+}
+.tgam-credits-container{
+    color: #666666;
+    float: right;
+    font-family: Verdana,sans-serif;
+    font-size: 9px;
+    margin-top: 0;
+    padding-top: 8px;
+    text-align: right;
+    width: 673px;
+}
+.tgam-credits a{
+	color:#666666;
+}
+.googft-info-window h2{
+	font-family:'PrattRegular',Georgia,'Times New Roman', sans-serif;
+	padding:0 0 10px;
+	border-bottom:1px solid #ececec;
+}
+</style>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing"></script>
+<script type="text/javascript" src="http://beta.images.theglobeandmail.com/archive/01327/jquery-1_6_4_min_1327995a.js"></script>
+<script type="text/javascript" src="jquery-ui-1.8.16.custom.min.js"></script>
+<link rel="stylesheet" type="text/css" href="jquery-ui-1.8.16.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="http://beta.images.theglobeandmail.com/bundle/2006392680/css/fonts.css" />
+<!-- Import the visualization javascript -->
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+<!-- Initialize visualization -->
+<script type="text/javascript">
+  google.load('visualization', '1', {});
+</script>
+
+<script type="text/javascript">
+// Define variables
+var map;
+var layer;
+var tableid = 2799580;
+var columns = ["Map3Code", "Map4Code", "Map5Code", "Map6Code", "Map7Code", "Map8Code"];
+var colours = ['#ffe486', '#f18042', '#ff0000', '#701d1d', '#2c0606'];
+var coloursCompare = ['#007eff', '#ffe486', '#f18042', '#701d1d', '#701d1d'];
+
+// On load
+function initialize() {
+// Create map
+  map = new google.maps.Map(document.getElementById('map_canvas'), {
+	center: new google.maps.LatLng(43.70262970587179, -79.3817138671875),
+	zoom: 11,
+	panControl: false,
+	zoomControl: false,
+	scaleControl: false,
+	streetViewControl: false,
+	mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+
+var immigrantMap = false;
+// Create base layer from Fusion Tables
+makeMap(0);
+function makeMap(i){
+//    console.log(i, immigrantMap);
+    if(immigrantMap){
+        i = i + 3;
+    }
+  if(layer){ layer.setMap(null) }
+if(i == 2 || i == 5){
+    // apply different styles for comparison map
+      layer = new google.maps.FusionTablesLayer({
+        query: {
+            select: 'geometry',
+            from: tableid
+        },
+        styles: [{
+        where: "'" + columns[i] + "'" + " = '1'",
+        polygonOptions: {
+            fillColor: coloursCompare[3]
+        }
+    }, {
+        where: "'" + columns[i] + "'" + " = '2'",
+        polygonOptions: {
+            fillColor: coloursCompare[0],
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '3'",
+        polygonOptions: {
+            fillColor: coloursCompare[1],
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '4'",
+        polygonOptions: {
+            fillColor: coloursCompare[2],
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '5'",
+        polygonOptions: {
+            fillColor: coloursCompare[4],
+        }
+    }
+    ],
+        
+  });
+} else {
+  layer = new google.maps.FusionTablesLayer({
+        query: {
+            select: 'geometry',
+            from: tableid
+        },
+        styles: [{
+        where: "'" + columns[i] + "'" + " = '1'",
+        polygonOptions: {
+            fillColor: colours[0]
+        }
+    }, {
+        where: "'" + columns[i] + "'" + " = '2'",
+        polygonOptions: {
+            fillColor: colours[1],
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '3'",
+        polygonOptions: {
+            fillColor: colours[2],
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '4'",
+        polygonOptions: {
+            fillColor: colours[3],
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '5'",
+        polygonOptions: {
+            fillColor: colours[4],
+        }
+    }
+    ]
+  });
+}
+  layer.setMap(map);
+}
+
+/* ---------- Query Controls / Filters ---------- */
+// Year Filter
+var mapConstant = 0;
+makeYearSlider();
+function makeYearSlider(){
+	// Create the scrubber
+	$('#year-slider').slider({
+            min: 2000,
+			max: 2010,
+			value: 2000,
+            step:5,
+			animate: true,
+    			slide: function( event, ui ) {
+                    if(ui.value == 2010){
+                        $('#filter-year-tip').text('Change in percentage');
+                            $('.legend2').show();
+                            $('.legend1').hide();
+                        makeMap(2);
+                        mapConstant = 2;
+                    } else if(ui.value == 2000) {
+                        makeMap(0);
+                        mapConstant = 0;
+                        $('#filter-year-tip').text(ui.value);
+                        $('.legend2').hide();
+                            $('.legend1').show();
+                    } else {
+                        makeMap(1)
+                        mapConstant = 1;
+                        $('#filter-year-tip').text(ui.value);
+                        $('.legend2').hide();
+                            $('.legend1').show();
+                    }
+                    
+                }
+        })
+}
+
+
+// Injury filter
+$('#filter-map a').click(function(){
+    var thisFilter = $(this).text();
+    if($(this).parent().index() == 1){
+        // Map 6, 7 and 8
+        immigrantMap = true;
+        $('.legend2').hide();
+        $('.legend1').show();
+        makeMap(mapConstant);
+    } else {
+        // else Map 3, 4, 5
+        immigrantMap = false;
+        makeMap(mapConstant);
+    }    
+    
+    $('#filter-map li').removeClass('selected');
+    $(this).parent().addClass('selected');
+    return false;
+})
+
+// Zoom to your area
+$('.zoom').click(function(){
+    zoom($(this));
+});
+$('#filter-zoom').bind('keyup', function(e){
+    var key = e.keyCode || e.which;
+    if(key === 13){
+        zoom($(this));
+    }
+})
+
+function zoom(thisZoom){
+  var address = thisZoom.parent().find('input').val();
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode( { 'address': address}, function(results, status){
+    if(status == 'OK'){
+        map.setCenter(results[0].geometry.location);
+        map.setZoom(15);
+    }
+   });
+}
+
+var i = 1;
+$('.explainer-content').eq(0).show();
+$('#explainer-nav a').bind('click', function(){
+    if($(this).text() == 'Next'){
+        i = i + 1;
+        changeExplainer(i);
+    } else if($(this).text() == 'Back'){
+        i = i -1;
+        changeExplainer(i);
+    } else {
+        $('#legend-container').show();
+        $('#explainer').hide();
+    }
+    return false;
+})
+function changeExplainer(i){
+    $('.explainer-content').hide();
+    $('.explainer-content').eq(i - 1).show();
+    if(!($(this).hasClass('unhighlighted'))){
+        switch (i)
+        {
+            case 1:
+                makeMap(0);
+                map.setZoom(11);
+                $('#back a').addClass('unhighlighted');
+                break;
+            case 2:
+                makeMap(2);
+                map.setZoom(16);
+                $('#back a').removeClass('unhighlighted');
+                break;
+            case 3:
+                makeMap(4);
+                map.setZoom(12);
+                $('#explainer-nav #next').show();
+                $('#next a').removeClass('unhighlighted');
+                break;
+            case 4:
+                makeMap(0);
+                map.setZoom(11);
+                $('#next a').addClass('unhighlighted');
+                break;
+        }
+    }
+}
+/* ----------- Navigation ------------ */
+$('#mapview').click(function(){
+    mapView();
+    $('#tab-container .selected').removeClass('selected');
+    $(this).addClass('selected');
+	$('#legend-container > div').hide();
+    $('#legend').show();
+	slideNav($(this).parent().index());
+    return false;
+})
+$('#guide').click(function(){
+	$('#legend-container > div').hide();
+	$('#legend-guide').show();
+	mapView();
+	$('#tab-container .selected').removeClass('selected');
+	$(this).addClass('selected');
+	slideNav($(this).parent().index());
+	return false;
+})
+	$('#guide-nav a').click(function(){
+		$('#guide-nav a').removeClass('active');
+		$(this).addClass('active');
+		$('#slide-container').animate({'marginLeft':-247*($(this).parent().index())});
+		tourGuide($(this).parent().index());
+	})
+$('#drawtools').click(function(){
+	if(!($(this).hasClass('selected'))){
+        drawTools();
+        $('#tab-container .selected').removeClass('selected');
+        $(this).addClass('selected');
+		$('#legend-container > div').hide();
+        $('#legend-user').show();
+		slideNav($(this).parent().index());
+		tourGuide(0);
+    }
+    return false;
+})
+$('#raw').click(function(){
+	if(!($(this).hasClass('selected'))){
+        $('#tab-container .selected').removeClass('selected');
+        $(this).addClass('selected');
+		$('#legend-container > div').hide();
+        $('#legend-raw').show();
+		slideNav($(this).parent().index());
+    }
+    return false;
+})
+$('.legend-nav').click(function(){
+	var thisMove = $(this).parent().parent().index();
+//console.log(thisMove);
+	$('.legend-slide').hide();
+	if($(this).attr('href') == "#next"){
+		$('.legend-slide').eq(thisMove + 1).show();
+		tourGuide(thisMove + 1);
+	} else {
+		$('.legend-slide').eq(thisMove - 1).show();
+		tourGuide(thisMove - 1);
+	}
+	return false;
+})
+function slideNav(i,l){
+	if(l){
+		$('#l').animate({'left':(i-1)*166, 'width':'253px'});
+	} else {
+		$('#l').animate({'left':(i-1)*166, 'width':'166px'});
+	}
+}
+function mapView(){
+    if(drawingManager){
+		if(lastMarker != undefined) lastMarker.setMap(null);
+        drawingManager.setMap(null);
+        drawing = false;
+        user_layer.setMap(null);
+        $('.tab-drawtools').removeClass('open').animate({'width':'150px'});
+        $('#drawtools a').removeClass('selected');
+        layer.setMap(map);
+    }
+}
+/* -------------- Guided Tour ------------------*/
+$('#guide-years .year-toggle a').click(function(){
+	filter('reset');
+	filter('YEAR', $(this).text());
+	return false;
+})
+$('#open-guided-tour').click(function(){
+	$('#legend-container > div').hide();
+	$('#legend-guide').show();
+	$('.selected').removeClass('selected');
+	$('#guide').addClass('selected');
+	slideNav(3);
+	return false;
+})
+var latlon;
+function tourGuide(m){
+n = m + 1;
+switch(n)
+{
+case 1:
+//reset to wide view
+  filter('reset');
+  latlon = new google.maps.LatLng(43.704615274467294, -79.38858032226562),
+  map.setZoom(11);
+  map.setCenter(latlon);
+  break;
+case 2:
+//zoom to bathurst and ossington
+  filter('reset');
+  latlon = new google.maps.LatLng(43.6543926, -79.4226921);
+  map.setZoom(14);
+  map.setCenter(latlon);
+break;
+case 3:
+//wide view for years again
+  filter('YEAR', 1987);
+  latlon = new google.maps.LatLng(43.6543926, -79.4226921);
+  map.setZoom(11);
+  map.setCenter(latlon);
+break;
+case 4:
+//Ulrich
+  filter('ID', 30074);
+  latlon = new google.maps.LatLng(43.7159233093262, -79.3537139892578);
+  map.setZoom(15);
+  map.setCenter(latlon);
+break;
+}
+}
+/* -------------- Drawing Tools ----------------*/
+var drawingManager, drawing = false, lastMarker;
+//var content = $('.user-form').html();
+function drawTools(){
+    layer.setMap(null);
+    user_layer.setMap(map);
+    if(!drawing){
+		if(lastMarker != undefined) lastMarker.setMap(map);
+        drawing = true;
+        drawingManager = new google.maps.drawing.DrawingManager({
+        drawingMode: google.maps.drawing.OverlayType.MARKER,
+        drawingControl: true,
+        drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_LEFT,
+            drawingModes: [google.maps.drawing.OverlayType.MARKER]
+        }
+        });
+        drawingManager.setMap(map);
+        
+        map.setOptions({ draggableCursor: 'url(http://maps.google.com/mapfiles/openhand.cur), default' });
+        // Create infobox when new user marker created
+        var lastWindow;
+
+        google.maps.event.addListener(drawingManager, 'markercomplete', function(marker) {
+            if(lastMarker) lastMarker.setMap(null);
+            lastMarker = marker;
+            var latlon = marker.getPosition();
+           /* if(lastWindow) lastWindow.close(); //close the last window if it exists
+            lastWindow = new google.maps.InfoWindow( {
+                position: latlon,
+                size: new google.maps.Size(350,500),
+                content: "" + content + ""
+                });
+                lastWindow.open(map);
+           */
+		   $('form').submit(function() {
+				sendData(latlon, $(this).serializeArray());
+		   });
+        }); //markercomplete
+    }
+
+}
+$('form').submit(function() {
+	$("#success-message").text("Please place a marker on the map.");
+	return false;
+});
+// Send drawn form to user fusion table
+function sendData(latlon, formData){
+    $('#success-message').html('<div style="float: right;margin-top: 0;padding-bottom: 5px;padding-left: 53px;width: 21px;"><img src="loading.gif" /></div>');
+            // Send data to Fusion Tables on submit
+            // TO DO: Do this on ajax form submit instead of right away.
+            var string = String(latlon);
+            string = string.replace("(", "").replace(")", "")
+            var newlatlon = string.split(", ");
+            // lat=&lon=&desc=&safe=&road=&cras=&ageo=&acct=&traf=&roads=&year
+            var nUrl = "http://partners.theglobeandmail.com/interactives/bicyclecollisions/ftconnect.php?";
+            nUrl += "lat=" + newlatlon[0] + "&lon=" + newlatlon[1]; 
+      $.each(formData, function(i, formData){
+        nUrl += "&" + formData.name + "=" + formData.value;
+      });
+      $.get(nUrl, function(){
+        $('#success-message').text('Success! Your marker is awaiting moderation.');
+      })
+	  var t=setTimeout("$('#success-message').text('Success! Your marker is awaiting moderation.')", 1500);
+}
+} // initialize()
+</script>
+</head>
+<body onLoad="initialize();">
+<div id="map-container">
+<div id="map-header">
+	<div id="tab-container">
+		<div id="l"></div>
+		<div class="tab tab-first selected"><a id="mapview" class="selected" href="#map">City data<div class="tab-sub">1986 to 2010</div></a></div>
+		<div class="tab">
+			<a id="guide" href="#map">Guided tour<div class="tab-sub">The story behind the data</div></a>
+		</div>
+		<div class="tab">
+			<a id="raw" href="#map">Raw data<div class="tab-sub">View in spreadsheet</div></a>
+		</div>
+		<div class="tab tab-zoom">
+			<div id="filter-zoom">
+            <h3>Zoom to your area</h3>
+            <input type="text" value="Enter your address or postal code"/><div class="zoom"></div><br />
+        	</div>
+		</div>
+	</div>
+</div><!-- #map-header-->
+<div id="legend-container">
+    <div id="legend">
+        <h2>Adjust Filters</h2>
+        Explore the data using filters below. Click an area on the map
+        <hr />
+           <div class="filter-box" id="filter-map">
+        <h3>Percentage of working poor</h3>
+        <ul>
+            <li class="selected"><a href="#">General population</a></li>
+            <li><a href="#">Immigrant population</a></li>
+        </ul>
+        </div>
+        <div class="filter-box" id="filter-years">
+            <h3>Toggle between years</h3>
+            <div id="year-slider"></div>
+            <div class="filter-tip" id="filter-year-tip">2000</div>
+        </div>
+    </div>
+    <div id="legend-raw">
+        <h2>Raw data</h2>
+		<p>Access the raw data and explore 25 years of bicycle collisions for yourself. Available information includes:</p>
+		<ul>
+			<li>Safety equipment</li>
+			<li>Road class</li>
+			<li>Age of cyclist</li>
+			<li>Crash type</li>
+			<li>Latitude and longitude</li>
+			<li>Driver condition</li>
+			<li>And more</li>
+		</ul>
+		<p>The Globe has added many other data sets as well.</p>
+		<p>Find it all on The Globe and Mail's BuzzData account.</p>
+		<p><a style="font-size:14px;font-weight:bold;font-family:'PrattHeavy',Georgia,'Times New Roman', serif;" target="_top" href="http://www.buzzdata.com/globeandmail">Access the data &#187;</a></p>
+    </div>
+    <div id="legend-guide">
+		<div class="legend-slide active">
+			<h2>Guided data tour</h2>
+			The Globe and Mail acquired 25 years of bicycle collision data from the City of Toronto &mdash; from 1986 to 2010. During that time, there were 31,481 collision reports. </p>
+			<p>The concentration of accidents is clear, even at this zoom level: the downtown core, where volume is highest. City officials estimate the number of unreported collisions ranges as high as 90 per cent. There is little data available on bicyclist demographics or volume, making it hard to draw conclusions about the most dangerous intersection or most at-risk bicyclist.</p>
+			<h2></h2>
+			<p>Next slide: <a class="legend-nav" href="#next">A closer view</a></p>
+		</div>
+		<div class="legend-slide">
+			<h2>A closer view</h2>
+			Zooming in, the sheer volume of collisions becomes clear. In downtown Toronto, there is a new collision every few meters.
+			<p>The city uses its own categorization system to track data based on limited available information. For more precise analysis, city officials take a sampling of collisions and reconstruct the accident.</p>
+			<p>Each report is colour-coded by injury.</p>
+        <div class="filter-box filter-injury">
+	        <ul>
+				<li><img src="small_green.png"> None: No injury sustained</li>
+				<li><img src="small_blue.png"> Minimal: They did not go to the hospital</li>
+				<li><img src="small_purple.png"> Minor: They went to the hospital but were treated in the emergency room and not admitted</li>
+				<li><img src="small_yellow.png"> Major: They were admitted to the hospital</li>
+				<li><img src="small_red.png"> Fatal: They died immediately or within 30 days</li>
+				<li><img src="small_grey.png"> Unrecorded</li>
+			</ul>
+		</div>
+			<h2></h2>
+			<p>Next slide: <a class="legend-nav" href="#next">The most dangerous years</a></p>
+			<p>Previous: <a class="legend-nav" href="#prev">Guided data tour</a></p>
+		</div>
+		<div class="legend-slide" id="guide-years">
+			<h2>The most dangerous years</h2>
+			<p class="year-toggle">In this view, we've presented the accidents for the most dangerous year in this data set: <a href="#">1987</a>, when reported collisions reached 1,600. (Zoom in to see more data points.)</p>
+			<p class="year-toggle">The number of collisions dropped over the next decade to its lowest level, in <a href="#">1996</a>, with just over 1,000. Since then, it's averaged 1,200 per year &mdash; the same number of collisions as in <a href="#">2010</a>.
+			<p>Complete collision data for 2011 are not yet available, but two fatalities were confirmed by Toronto police. This compares to two fatalities in 2010 and one in 2009.</p>
+			<h2></h2>
+			<p>Next slide<br /><a class="legend-nav" href="#next">One fatality among many</a></p>
+			<p>Previous<br /><a class="legend-nav" href="#prev">A closer view</a></p>
+		</div>
+		<div class="legend-slide">
+			<h2>One fatality among many</h2>
+			<p>Looking at the entire data set, it's hard to imagine the person involved in each collision. But for families of the deceased, it's a moment burned in time. On this map, the point is emphasized by Ulrich Hartmann, a husband and father of two young daughters who was riding his bicycle along Eglinton Avenue East on Sept. 11, 2011. He was side-swiped by a cement truck and killed at the age of 47.</p>
+			<p>This type of fatality was identified in a 1998 coroner's report, which analyzed Toronto bicyclist fatalities, as the most easily preventable. Metal side guards can be installed on these large trucks to prevent cyclists from getting pulled beneath the vehicle's wheels when sideswiped.</p>
+			<h2></h2>
+			<p>Next: <a target="_top" href="http://www.tgam.ca/bike">Read the entire story</a></p>
+			<p>Previous: <a class="legend-nav" href="#prev">A closer view</a></p>
+		</div>
+	</div>
+	<div class="filter-box" id="legend-colours">
+            <h3>Legend</h3>
+            <ul class="legend1">
+                <li><div class="colour0"></div>0 to 5 per cent</li>
+                <li><div class="colour1"></div>5 to 10 per cent</li>
+                <li><div class="colour2"></div>10 to 15 per cent</li>
+                <li><div class="colour3"></div>15 to 20 per cent</li>
+                <li><div class="colour4"></div>More than 20 per cent</li>
+            </ul>
+            <ul class="legend2">
+                <li><div class="colour5"></div>Decrease</li>
+                <li><div class="colour1"></div>Increase up to 5 per cent</li>
+                <li><div class="colour2"></div>Increase 5 to 10 per cent</li>
+                <li><div class="colour4"></div>Increase more than 10 per cent</li>
+            </ul>
+    </div>
+</div>
+<div id="map_canvas"></div>
+</div>
+<div class="tgam-credits-container">
+<div class="tgam-credits">
+<div style="float:left; width:400px;text-align:left;">Note: Not all markers are shown at higher zoom levels.<br />If the map doesn't load, zoom in to refresh.</div>
+Interactive by <a href="mailto:sathompson@globeandmail.com">Stuart A. Thompson</a>
+</div>
+</div>
+</html>

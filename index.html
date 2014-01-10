@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+/* ----------- Global CSS ----------- */
+body, html{
+	margin:0;
+	width:940px;
+}
+.clearfloat{
+	clear:both;
+}
+a{
+	text-decoration:none;
+	color:#FF0000;
+	outline:none;
+}
+a:hover{
+	text-decoration:underline;
+}
+/* ----------- Google Map ----------- */
+#map_canvas{
+	width:670px;
+	height:640px;
+	float:left;
+}
+#map-container{
+	font-family:Arial, Helvetica, Tahoma, sans-serif;
+	font-size:12px;
+	width:920px;
+	height: 705px;
+	position:relative;
+}
+#map_canvas h4{
+    margin:10px 0 5px 0;
+}
+    #map_canvas h3{
+    border-bottom: 1px solid #ECECEC;
+    font-family: 'PrattRegular', Georgia, 'Times New Roman', sans-serif;
+    margin: 10px 0 5px;
+    padding: 0 0 10px;
+    }
+/* ----------- Player Controls ----------- */
+#pause{
+	display:none;
+}
+.hashmark{
+    float: right;
+    height: 14px;
+    margin-top: 20px;
+    position: relative;
+	font-size: 10px;
+	text-align:center;
+}
+#hashmarks{
+    float: left;
+    margin: 0 auto 0 25px;
+    width: 800px;
+}
+#title-holder{
+	   text-align:center;
+	   font-family:helvetica, arial, sans-serif;
+	   color:Gray;
+	   font-size:12px;
+	   width:100%;
+	   clear:both;
+	   margin:15px 0;
+}
+#slider{
+	margin:0 auto;
+	background-image:url('images/slider-bg.png');
+    height: 12px;
+    position: relative;
+    width: 920px;
+    z-index: 0;
+	background-position: 99.9% 50%;
+}
+#slider{
+	width:600px;
+	position: relative;
+}
+	#slideMe{
+		border:1px solid black;
+		padding:10px;
+		position: absolute;
+	}
+/* ----------- Header ----------- */
+#map-header{
+	font-family: 'PrattHeavy',Georgia,'Times New Roman',serif;
+	width:100%;
+	float:left;
+}
+#tab-container{
+	float:left;
+	width:100%;
+}
+.tab{
+    border-right: 1px solid #ECECEC;
+    float: left;
+    height:70px;
+    width:165px;
+}
+    .tab-first{
+        border-left: 1px solid #ECECEC;
+        width:164px;
+    }
+	.tab a{
+    border-top: 1px solid #ECECEC;
+    background-color:#F7F7F7;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    height: 100%;
+    line-height: 3.5;
+    text-align: center;
+    width: 100%;
+
+	}
+        .tab a:hover{
+            text-decoration:none;
+			border-top:1px solid #c7c7c7;
+			background-color:#fbfbfb;
+        }
+    .tab-sub{
+        width:100%;
+        text-align:center;
+        color:#a8a8a8;
+        margin-top:-26px;
+        font-size:11px;
+    }
+    .tab a.selected{
+		border-top:1px solid #c7c7c7 !important;
+		background-color:white;
+    }
+    .tab-drawtools{
+        width:150px;
+        overflow:hidden;
+    }
+	.tab-zoom{
+		border-top:1px solid #ececec;
+		width:252px;
+	}
+	.tab-zoom h3{
+		margin:0px;
+		font-weight:normal;
+        font-size:14px;
+	}
+#l{
+    background-color: #FF0000;
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 166px;
+    z-index: 9999;
+}
+/* ----------- Legend ----------- */
+#legend-container{
+    border-left: 1px solid #ECECEC;
+	border-top: 1px solid #ECECEC;
+    color: #333333;
+    float: left;
+    height: 100%;
+    padding: 0 10px;
+    width: 228px;
+    z-index: 10;
+	font-size: 12px;
+    line-height: 1.5;
+}
+#legend-container hr{
+	border:1px solid #f2f2f2
+}
+#legend-container > div{
+    padding:10px;
+}
+.legend-label{
+    color: #EEEEEE;
+}
+#legend-container li, #legend-container ul{
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-top: 3px;
+    padding-left: 10px;
+	list-style-type:none;
+}
+#lege
+    #legend-colours div{
+        width:15px;
+        height:15px;
+        float:left;
+        margin-right:3px;
+    }
+    #legend-colours ul, #legend-colours li{
+        list-style-type:none;
+        padding:0;
+        margin:0;
+    }
+    #legend-colours > div{
+    background: none repeat scroll 0 0 white;
+    border-left: 1px solid #B0B0B0;
+    border-right: 1px solid #ECECEC;
+    border-top: 1px solid #B0B0B0;
+    bottom: 21px;
+    padding: 10px;
+    position: absolute;
+    right: 1px;
+    width: 138px;
+    z-index: 99999;
+    margin-right:10px;
+    height:173px;
+    }
+    #legend-colours li div{
+        width:15px;
+        height:15px;
+        margin-right:3px;
+        float:left;
+    }
+	#legend-colours h3{
+		margin:5px 0 !important;
+        font-size:12px;
+	}
+	#legend-colours li, #legend-colours ul{
+		margin:5px 0;
+		padding:0;
+	}
+    #legend-colours .colour0{
+        background-color:#d7be90;
+    }
+    #legend-colours .colour1{
+        background-color:#cd9572;
+    }
+    #legend-colours .colour2{
+        background-color:#c53c27;
+    }
+    #legend-colours .colour3{
+        background-color:#8a6655;
+    }
+    #legend-colours .colour4{
+        background-color:#362827;
+    }
+    #legend-colours .colour5{
+        background-color:#007eff;
+    }
+#legend-container ol{
+	padding:0 0 0 13px;
+	margin:0;
+}
+#legend-container ol li{
+	margin:0 0 0 5px;
+	padding:0;
+}
+#legend-container a{
+    color:#FF0000;
+    text-decoration:none;
+}
+    #legend-container a:hover{
+        text-decoration:underline;
+    }
+/* -- Legend > Filters -- */
+#legend-container h3{
+    font-size:13px;
+}
+#legend-container h2{
+    font-size:16px;
+}
+#legend-container h2, #legend-container h3{
+    margin:10px 0 5px 0;
+    font-family:'PrattRegular', Georgia, 'Times New Roman', sans-serif;
+}
+.filter-box{
+    border-bottom: 1px solid #ECECEC;
+    border-top: 1px solid #ECECEC;
+    float: left;
+    margin: 5px 0;
+    padding: 5px 0;
+    width: 100%;
+}
+hr{
+    border-color:#ececec;
+    background:none;
+}
+.filter-injury ul{
+    margin:0;
+    padding:0;
+}
+.filter-injury li{
+    margin: 0 3x;
+    padding:0 0 0 10px;
+    list-style-type:none;
+}
+.filter-box li.selected{
+    background-image:url('arrow.png');
+    background-repeat:no-repeat;
+    background-position:0px 7px;
+}
+    #filter-zoom{
+        float:left;
+		margin: 10px 20px;
+		margin: 15px 20px;
+    }
+    #filter-zoom input{
+    color: #A8A8A8;
+    float: left;
+    font-size: 10px;
+    margin-top: 3px;
+    padding: 3px;
+    width: 152px;
+    }
+        #filter-zoom small{
+            clear:both;
+            display:block;
+        }
+        .zoom{
+            background-image: url("zoom.png");
+            background-position: 3px 4px;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            float: left;
+            height: 15px;
+            margin: 3px 1px 1px;
+            padding: 2px;
+            width: 15px;
+        }
+#legend-colours{
+	display:absolute !important;
+}
+.legend2, .legend3, .legend4{
+    display:none;
+}  
+.filter-tip{
+    text-align:center;
+    margin-bottom: 9px;
+}
+/* -- Legend > User -- */
+#legend, #legend-reader, #legend-guide, #legend-raw{
+    display:none;
+    float:left;
+    width:209px;
+}
+#legend-colours > div{
+    width:138px;
+    font-size:11px;
+    line-height:1.7;
+}
+#legend-guide {
+	display:block;
+}
+#success-message{
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 150px;
+	color:green;
+	font-family:"PrattRegular", Arial, Helvetica, sans-serif;
+}
+/* --- User Form -- */
+.user-label{
+    font-family:"PrattHeavy", Arial, Helvetica, sans-serif;
+}
+.inner-user-form{
+    width:214px;
+	position:relative;
+}
+/* -- Legend > Guide -- */
+#legend-guide{
+	width:229px;
+}
+#slide-container{
+	width:9000px;
+	margin-top:10px;
+}
+.legend-guide{
+    float: left;
+    padding-right: 40px;
+    width: 207px;
+	position:absolute;
+}
+	#legend-guide > div{
+		display:none;
+		width:207px;
+	}
+		#legend-guide .active{
+			display:block;
+		}
+#legend-header{
+    background-color: #FBFBFB;
+    border-left: 1px solid #ececec;
+    display: block !important;
+    font: 13px/1.2 Georgia,"Times New Roman",serif;
+    margin-left: -21px;
+    margin-top: -10px;
+    height: 15px;
+    padding: 10px 10px 15px;
+    position: relative;
+    width: 229px !important;
+	border-bottom:1px solid #ECECEC;
+}
+#nav-count{
+	float:left;
+}
+#nav-controls{
+	float:right;
+	width:82px;
+	margin-right:-9px;
+}
+.nav-button > span{
+    background-image: url("nav-button.png");
+    background-repeat: no-repeat;
+    float: left;
+    height: 20px;
+    left: 10px;
+    position: absolute;
+    top: 10px;
+    width: 20px;
+}
+#nav-prev span{
+	background-position:-43px 0;
+}
+	#nav-prev:hover span{
+		background-position:-65px 0;
+	}
+#nav-next span{
+	background-position: 0 0;
+}
+	#nav-next:hover span{
+		background-position:-22px 0;
+	}
+.nav-button{
+    border-left: 1px solid #ECECEC;
+    display: block;
+    float: left;
+    height: 20px;
+    overflow: hidden;
+    padding: 10px;
+    text-indent: -9999px;
+	margin-top: -10px;
+    width: 20px;
+	position:relative;
+}
+/* ------ Credits ------ */ 
+.tgam-credits{
+	color: #666666;
+    float: left;
+    margin: 0;
+    padding: 0;
+	text-transform:uppercase;
+	width:100%;
+}
+.tgam-credits-container{
+    color: #666666;
+    float: left;
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: 9px;
+    margin-top: 0;
+    padding-top: 8px;
+    text-align: right;
+    width: 673px;
+}
+.tgam-credits a{
+	color:#666666;
+}
+#yorku{
+    display:none;
+}
+.googft-info-window h2{
+	font-family:'PrattRegular',Georgia,'Times New Roman', sans-serif;
+	padding:0 0 10px;
+	border-bottom:1px solid #ececec;
+}
+</style>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing"></script>
+<script type="text/javascript" src="http://beta.images.theglobeandmail.com/archive/01327/jquery-1_6_4_min_1327995a.js"></script>
+<script type="text/javascript" src="jquery-ui-1.8.16.custom.min.js"></script>
+<link rel="stylesheet" type="text/css" href="jquery-ui-1.8.16.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="http://beta.images.theglobeandmail.com/bundle/2006392680/css/fonts.css" />
+<!-- Import the visualization javascript -->
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+<!-- Initialize visualization -->
+<script type="text/javascript">
+  google.load('visualization', '1', {});
+</script>
+
+<script type="text/javascript">
+// Define variables
+var map;
+var layer;
+var tableid = 2799580;
+var columns = ["Map3Code", "Map4Code", "Map5Code", "Map6Code", "Map7Code", "Map8Code", "MapCode", "MapCode2006","Figure"];
+var colours = ['#ffe486', '#f18042', '#ff0000', '#701d1d', '#2c0606'];
+var coloursCompare = ['#007eff', '#ffe486', '#f18042', '#701d1d', '#701d1d'];
+
+// On load
+function initialize() {
+// Create map
+  map = new google.maps.Map(document.getElementById('map_canvas'), {
+	center: new google.maps.LatLng(43.704615274467294, -79.38858032226562),
+	zoom: 11,
+	panControl: false,
+	zoomControl: true,
+	scaleControl: false,
+	streetViewControl: false,
+	mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+// Subway routes
+var ttcMap = new google.maps.FusionTablesLayer(2856717);
+// GTA muncipalities
+var gtaId = 2859229;
+var newImmigrants = 2859178;
+var newImmigrantMap = false;
+var genMap = false;
+var immigrantMap = false;
+var gtaMap = false;
+var ttcShow = false;
+var perChange = false;
+var user_layer;
+var userid = 2888561;
+// Create base layer from Fusion Tables
+
+makeMap(0);
+function makeMap(i, user){
+    if(genMap == true){
+        $('#legend-colours > div').hide();
+        $('.legend1').show();
+        $('.year-slider').slider('disable');
+        $('.slider-filter-gen-im').slider({'disabled':false,'max':2010});
+        $('#yorku').hide();
+        $('#metcalf').show();
+    } else if(immigrantMap == true){
+        i = i + 3;
+        $('#legend-colours > div').hide();
+        $('.legend1').show();
+        $('.year-slider').slider('disable');
+        $('.slider-filter-gen-im').slider({'disabled':false,'max':2010});
+        $('#yorku').hide();
+        $('#metcalf').show();
+    } else if(gtaMap == true){
+		i = i + 6;
+        $('#legend-colours > div').hide();
+        $('.legend3').show();
+        $('.year-slider').slider('disable');
+        $('.slider-filter-gta').slider({'disabled':false,'max':2005});
+        $('#yorku').hide();
+        $('#metcalf').show();
+	} else if(newImmigrantMap == true){
+        $('#legend-colours > div').hide();
+        $('.legend4').show();
+        $('.year-slider').slider('disable');
+        $('#yorku').show();
+        $('#metcalf').hide();
+		i = i + 8;
+	}
+    if(perChange == true){
+        $('#legend-colours > div').hide();
+        $('.legend2').show();
+    }
+  if(layer){ layer.setMap(null) }
+ if(i == 2 || i == 5){
+// apply different styles for "difference" percentage maps
+      layer = new google.maps.FusionTablesLayer({
+        query: {
+            select: 'geometry',from: tableid
+        },
+        styles: [{
+        where: "'" + columns[i] + "'" + " = '1'",
+        polygonOptions: {
+            fillColor: coloursCompare[3]
+        }
+    }, {
+        where: "'" + columns[i] + "'" + " = '2'",
+        polygonOptions: {
+            fillColor: coloursCompare[0]
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '3'",
+        polygonOptions: {
+            fillColor: coloursCompare[1]
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '4'",
+        polygonOptions: {
+            fillColor: coloursCompare[2]
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '5'",
+        polygonOptions: {
+            fillColor: coloursCompare[4]
+        }
+    }
+    ]      
+  });
+} else {
+if(i < 6){
+// For working poor, general or immigrant maps
+  layer = new google.maps.FusionTablesLayer({
+        query: {
+            select: 'geometry',
+            from: tableid
+        },
+        styles: [{
+        where: "'" + columns[i] + "'" + " = '1'",
+        polygonOptions: {
+            fillColor: colours[0]
+        }
+    }, {
+        where: "'" + columns[i] + "'" + " = '2'",
+        polygonOptions: {
+            fillColor: colours[1]
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '3'",
+        polygonOptions: {
+            fillColor: colours[2]
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '4'",
+        polygonOptions: {
+            fillColor: colours[3]
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '5'",
+        polygonOptions: {
+            fillColor: colours[4]
+        }
+    }
+    ]
+  });
+} else if(i < 8) {
+// for suburbs and working poor map
+	  layer = new google.maps.FusionTablesLayer({
+        query: {
+            select: 'geometry',
+            from: gtaId
+        },
+        styles: [{
+        where: "'" + columns[i] + "'" + " = '1'",
+        polygonOptions: {
+            fillColor: colours[0]
+        }
+    }, {
+        where: "'" + columns[i] + "'" + " = '2'",
+        polygonOptions: {
+            fillColor: colours[1]
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '3'",
+        polygonOptions: {
+            fillColor: colours[2]
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '4'",
+        polygonOptions: {
+            fillColor: colours[3]
+        }
+    },{
+        where: "'" + columns[i] + "'" + " = '5'",
+        polygonOptions: {
+            fillColor: colours[4]
+        }
+    }
+    ]
+  });
+} else {
+// For immigrant settlement map, CMAs
+	  layer = new google.maps.FusionTablesLayer({
+        query: {
+            select: 'geometry',
+            from: newImmigrants
+        },
+        styles: [{
+        where: "'" + columns[i] + "'" + " < '14661'",
+        polygonOptions: {
+            fillColor: colours[4]
+        }
+    }, {
+        where: "'" + columns[i] + "'" + " < '5000'",
+        polygonOptions: {
+            fillColor: colours[3]
+        }
+    },{
+        where: "'" + columns[i] + "'" + " < '3000'",
+        polygonOptions: {
+            fillColor: colours[2]
+        }
+    },{
+        where: "'" + columns[i] + "'" + " < '2000'",
+        polygonOptions: {
+            fillColor: colours[1]
+        }
+    },{
+        where: "'" + columns[i] + "'" + " < '1000'",
+        polygonOptions: {
+            fillColor: colours[0]
+        }
+    }
+    ]
+  });
+}
+}
+  layer.setMap(map);
+  if(ttcShow){
+	ttcMap.setMap(map);
+  }
+    if(user){
+    user_layer = new google.maps.FusionTablesLayer({
+    query: {
+        select:'lat',
+        from:userid,
+        where:'approved = 1'
+    }
+});
+    user_layer.setMap(map);
+    } else {
+    if(user_layer != undefined){ user_layer.setMap(null); }
+    }// end if user
+}
+/* ---------- Query Controls / Filters ---------- */
+// Year Filter
+var mapConstant = 0;
+makeYearSlider();
+var changeValue = false;
+function makeYearSlider(){
+	// Create the scrubber
+	$('.year-slider').slider({
+            min: 2000,
+			max: 2010,
+			value: 2000,
+            step:5,
+			animate: true,
+    			slide: function( event, ui ) {
+                    if(ui.value == 2010){
+                        $(this).next().text('Change in percentage');
+                        perChange = true;
+                        makeMap(2);
+                        mapConstant = 2;
+                    } else if(ui.value == 2000) {
+                        perChange = false;
+                        makeMap(0);
+                        mapConstant = 0;
+                        $(this).next().text(ui.value);
+                    } else {
+                        mapConstant = 1;
+                        $(this).next().text(ui.value);
+                        $('#legend-colours > div').hide();
+                        $('.legend1').show();
+                        perChange = false;
+                        makeMap(1)
+                    }
+                    
+                }
+        })
+}
+
+// Injury filter
+var filterClass;
+$('.filter-map a').click(function(){
+    var thisFilter = $(this).text();
+    if($(this).parent().hasClass('toggle-gen')){
+        // Map - general population
+        immigrantMap = false
+        newImmigrantMap = false;
+        gtaMap = false;
+        genMap = true;
+        $('.legend2').hide();
+        $('.legend1').show();
+        makeMap(mapConstant);
+        filterClass = 'toggle-gen';
+    } else if($(this).parent().hasClass('toggle-im')){
+        // else immigration population
+        immigrantMap = true;
+        newImmigrantMap = false;
+        gtaMap = false;
+        genMap = false;
+        makeMap(mapConstant);
+        filterClass = 'toggle-im';
+    } else if($(this).parent().hasClass('toggle-im-set')){
+        // else immigrant settlement
+        immigrantMap = false;
+        newImmigrantMap = true;
+        gtaMap = false;
+        genMap = false;
+        makeMap(0);
+        filterClass = 'toggle-im-set';
+    } else if($(this).parent().hasClass('toggle-gta')){
+        // else GTA map
+        immigrantMap = false;
+        newImmigrantMap = false;
+        gtaMap = true;
+        genMap = false;
+        makeMap(0);
+        filterClass = 'toggle-gta';
+    }
+    
+    $('.filter-map li').removeClass('selected');
+    $('.' + filterClass).addClass('selected');
+    return false;
+})
+$('.filter-layer input').click(function(){
+    if($(this).attr('checked')){
+        ttcMap.setMap(map);
+    } else {
+        ttcMap.setMap(null);
+    }
+});
+
+// Zoom to your area
+$('.zoom').click(function(){
+    zoom($(this));
+});
+var filterVal;
+$('#filter-zoom').click(function(){
+	filterVal = $('#filter-zoom input').val();
+	$('#filter-zoom input').val('').css({'color':'#333'});
+	slideNav($(this).parent().index(), true);
+})
+$('#filter-zoom').bind('keyup', function(e){
+    var key = e.keyCode || e.which;
+    if(key === 13){
+        zoom($(this));
+    }
+})
+
+function zoom(thisZoom){
+  var address = thisZoom.parent().find('input').val();
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode( { 'address': address}, function(results, status){
+    if(status == 'OK'){
+        map.setCenter(results[0].geometry.location);
+        map.setZoom(15);
+    }
+   });
+}
+
+var i = 1;
+$('.explainer-content').eq(0).show();
+$('#explainer-nav a').bind('click', function(){
+    if($(this).text() == 'Next'){
+        i = i + 1;
+        changeExplainer(i);
+    } else if($(this).text() == 'Back'){
+        i = i -1;
+        changeExplainer(i);
+    } else {
+        $('#legend-container').show();
+        $('#explainer').hide();
+    }
+    return false;
+})
+function changeExplainer(i){
+    $('.explainer-content').hide();
+    $('.explainer-content').eq(i - 1).show();
+    if(!($(this).hasClass('unhighlighted'))){
+        switch (i)
+        {
+            case 1:
+                makeMap(0);
+                map.setZoom(11);
+                $('#back a').addClass('unhighlighted');
+                break;
+            case 2:
+                makeMap(2);
+                map.setZoom(16);
+                $('#back a').removeClass('unhighlighted');
+                break;
+            case 3:
+                makeMap(4);
+                map.setZoom(12);
+                $('#explainer-nav #next').show();
+                $('#next a').removeClass('unhighlighted');
+                break;
+            case 4:
+                makeMap(0);
+                map.setZoom(11);
+                $('#next a').addClass('unhighlighted');
+                break;
+        }
+    }
+}
+/* ----------- Navigation ------------ */
+$('#mapview').click(function(){
+    mapView();
+    $('#tab-container .selected').removeClass('selected');
+    $(this).addClass('selected');
+	$('#legend-container > div').hide();
+    $('#legend').show();
+    $('.year-slider').slider({'max':2010});
+    if(ttcShow == true){
+        $(".filter-layer input").prop("checked", true);
+    } else {
+        $(".filter-layer input").prop("checked", false);
+    }
+	slideNav($(this).parent().index());
+    return false;
+})
+$('#guide').click(function(){
+	$('#legend-container > div').hide();
+	$('#legend-guide').show();
+	mapView();
+	$('#tab-container .selected').removeClass('selected');
+	$(this).addClass('selected');
+	slideNav($(this).parent().index());
+    $('#legend-guide .filter-map li a:first').addClass('selected');
+    tourGuide(parseInt($('#nav-now').text())-1);
+	return false;
+})
+	$('#guide-nav a').click(function(){
+		$('#guide-nav a').removeClass('active');
+		$(this).addClass('active');
+		$('#slide-container').animate({'marginLeft':-247*($(this).parent().index())});
+		tourGuide($(this).parent().index());
+	})
+$('#reports').click(function(){
+	if(!($(this).hasClass('selected'))){
+        drawTools();
+        $('#tab-container .selected').removeClass('selected');
+        $(this).addClass('selected');
+		$('#legend-container > div').hide();
+        $('#legend-reader').show();
+		slideNav($(this).parent().index());
+  }
+    return false;
+})
+$('#raw').click(function(){
+	if(!($(this).hasClass('selected'))){
+        $('#tab-container .selected').removeClass('selected');
+        $(this).addClass('selected');
+		$('#legend-container > div').hide();
+        $('#legend-raw').show();
+		slideNav($(this).parent().index());
+    }
+    return false;
+})
+var maxSlides = $('#legend-guide > div').length - 1;
+$('#nav-max').text(maxSlides);
+
+$('.legend-nav').click(function(){
+	var thisMove = $('#legend-guide').find('.legend-slide.active').index();
+	$('.legend-slide').hide().removeClass('active');
+	if($(this).attr('href') == "#next"){
+		if(thisMove == maxSlides){
+		$('.legend-slide').eq(0).show().addClass('active');
+		tourGuide(0);
+		$('#nav-now').text(1);
+		} else {
+		$('.legend-slide').eq(thisMove).show().addClass('active');
+		tourGuide(thisMove);
+		$('#nav-now').text(thisMove + 1);
+		}
+	} else if($(this).attr('href') == "#prev"){
+		if(thisMove -1 == 0){
+		$('.legend-slide').eq(maxSlides-1).show().addClass('active');
+		tourGuide(maxSlides-1);
+		$('#nav-now').text(maxSlides);
+		} else {
+		$('.legend-slide').eq(thisMove-2).show().addClass('active');
+		tourGuide(thisMove - 2);
+		$('#nav-now').text(thisMove - 1);
+		}
+	}
+	return false;
+})
+function slideNav(i,l){
+	if(l){
+		$('#l').animate({'left':(i-1)*166, 'width':'253px'});
+	} else {
+		$('#l').animate({'left':(i-1)*166, 'width':'166px'});
+	}
+}
+function mapView(){
+    if(drawingManager){
+		if(lastMarker != undefined) lastMarker.setMap(null);
+        drawingManager.setMap(null);
+        drawing = false;
+        makeMap(0, false);
+        $('.tab-drawtools').removeClass('open').animate({'width':'150px'});
+        $('#drawtools a').removeClass('selected');
+    }
+}
+/* -------------- Guided Tour ------------------*/
+$('#guide-years .year-toggle a').click(function(){
+	filter('reset');
+	filter('YEAR', $(this).text());
+	return false;
+})
+$('#open-guided-tour').click(function(){
+	$('#legend-container > div').hide();
+	$('#legend-guide').show();
+	$('.selected').removeClass('selected');
+	$('#guide').addClass('selected');
+	slideNav(3);
+	return false;
+})
+  var markerLat = new google.maps.LatLng(43.70393274268031, -79.2813777923584);
+  var easternLat = new google.maps.LatLng(43.6619126, -79.360967);
+  var westonLat = new google.maps.LatLng(43.7002318, -79.5150781);
+var marker = new google.maps.Marker({
+      position: markerLat,
+      icon: 'http://maps.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png',
+      clickable: false
+  });
+var weston = new google.maps.Marker({
+      position: westonLat,
+      icon: 'http://maps.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png',
+      clickable: false
+  });
+var eastern = new google.maps.Marker({
+      position: easternLat,
+      icon: 'http://maps.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png',
+      clickable: false
+  });
+
+var latlon;
+function tourGuide(m){
+$('#legend-guide .year-slider').slider('enable');
+n = m + 1;
+switch(n)
+{
+case 1:
+//reset to wide view
+  eastern.setMap(null);
+  weston.setMap(null);
+  immigrantMap = false;
+  newImmigrantMap = false;
+  gtaMap = false;
+  genMap = true;
+  ttcMap.setMap(null);
+  ttcShow = false;
+  makeMap(0);
+  latlon = new google.maps.LatLng(43.704615274467294, -79.38858032226562),
+  map.setZoom(11);
+  map.setCenter(latlon);
+  layer.setMap(map);
+  $('.year-slider').slider({'max':2010, 'value':2000});
+  $('.slider-filter-gen-im').next().text('2000');
+  break;
+case 2:
+//zoom to east side
+  immigrantMap = true;
+  newImmigrantMap = false;
+  gtaMap = false;
+  genMap = true;
+  ttcMap.setMap(map);
+  ttcShow = true;
+  makeMap(0);
+  latlon = new google.maps.LatLng(43.77109381775651, -79.25125122070312);
+  $('.year-slider').slider({'max':2005, 'value':2000});
+  $('.slider-filter-gen-im').next().text('2000');
+  map.setZoom(11);
+  map.setCenter(latlon);
+break;
+case 3:
+//birchmount corrdior
+  $('.year-slider').slider({'max':2005, 'value':2000});
+  $('.slider-filter-gta').next().text('2000');
+  latlon = new google.maps.LatLng(43.747537106962746, -79.28970336914062);
+  map.setZoom(12);
+  map.setCenter(latlon);
+  immigrantMap = true;
+  genMap = false;
+  newImmigrantMap = false;
+  gtaMap = false;
+  makeMap(0);
+  layer.setMap(map);
+  ttcMap.setMap(null);
+  ttcShow = false;
+break;
+case 4:
+//suburbs
+  $('.year-slider').slider({'max':2005, 'value':2000});
+  layer.setMap(null);
+  ttcMap.setMap(null);
+  ttcShow = false;
+  immigrantMap = false;
+  newImmigrantMap = false;
+  genMap = false;
+  gtaMap = true;
+  makeMap(0);
+  latlon = new google.maps.LatLng(43.971074904863265, -79.46136474609375);
+  map.setZoom(9);
+  map.setCenter(latlon);
+break;
+case 5:
+//immigrants in toronto
+  marker.setMap(null);
+  latlon = new google.maps.LatLng(43.704615274467294, -79.38858032226562);
+  map.setZoom(11);
+  map.setCenter(latlon);
+  gtaMap = false;
+  genMap = false;
+  immigrantMap = false;
+  newImmigrantMap = true;
+  makeMap(0);
+  layer.setMap(map);
+  ttcShow = true;
+  ttcMap.setMap(map);
+break;
+case 6:
+//toronto 2012- scarborough
+  eastern.setMap(null);
+  weston.setMap(null);
+  marker.setMap(map);
+  latlon = new google.maps.LatLng(43.70393274268031, -79.2813777923584);
+  map.setZoom(14);
+  map.setCenter(latlon);
+  gtaMap = false;
+  immigrantMap = false;
+  newImmigrantMap = false;
+  ttcShow = false;
+  genMap = true;
+  ttcMap.setMap(null);
+  makeMap(0);
+  $('.year-slider').slider({'max':2005});
+  break;
+case 7:
+//toronto 2012- weston and eastern
+  latlon = new google.maps.LatLng(43.6795285, -79.4356403);
+  weston.setMap(map);
+  eastern.setMap(map);
+  marker.setMap(null);
+  map.setZoom(11);
+  map.setCenter(latlon);
+  gtaMap = false;
+  immigrantMap = false;
+  newImmigrantMap = false;
+  ttcShow = false;
+  genMap = true;
+  ttcMap.setMap(null);
+  makeMap(0);
+  $('.year-slider').slider({'max':2005});
+  break;
+}
+}
+/* -------------- Drawing Tools ----------------*/
+var drawingManager, drawing = false, lastMarker;
+//var content = $('.user-form').html();
+var submitting = false;
+function drawTools(){
+    layer.setMap(null);
+    makeMap(0, true);
+    //layer.setMap(null);
+    //user_layer.setMap(map);
+    if(!drawing){
+		if(lastMarker != undefined) lastMarker.setMap(map);
+        drawing = true;
+        drawingManager = new google.maps.drawing.DrawingManager({
+        drawingControl: true,
+        drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_LEFT,
+            drawingModes: [google.maps.drawing.OverlayType.MARKER]
+        }
+        });
+        drawingManager.setMap(map);
+        
+      //  map.setOptions({ draggableCursor: 'url(http://maps.google.com/mapfiles/openhand.cur), default' });
+        // Create infobox when new user marker created
+        var lastWindow;
+
+        google.maps.event.addListener(drawingManager, 'markercomplete', function(marker) {
+            if(lastMarker) lastMarker.setMap(null);
+            lastMarker = marker;
+            var latlon = marker.getPosition();
+           /* if(lastWindow) lastWindow.close(); //close the last window if it exists
+            lastWindow = new google.maps.InfoWindow( {
+                position: latlon,
+                size: new google.maps.Size(350,500),
+                content: "" + content + ""
+                });
+                lastWindow.open(map);
+           */
+		   $('form').submit(function() {
+			if(!submitting){
+				submitting = true;
+				sendData(latlon, $(this).serializeArray());
+			}
+		   });
+        }); //markercomplete
+    }
+}
+$('.marker-activate').click(function(){
+	drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
+	return false;
+});
+
+$('form').submit(function() {
+	if(!submitting){
+	$("#success-message").text("Please place a marker on the map.");
+	}
+	return false;
+});
+function resetForm(){
+	submitting = false;
+	$('form input').each(function(){
+		$(this).val('');
+	})
+	$('form textarea').val('').focus();
+	$('form input[type="submit"]').val('Submit');
+	lastMarker.setMap(null);
+	drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
+}
+// Send drawn form to user fusion table
+function sendData(latlon, formData){
+    $('#success-message').html('<div style="float: right;margin-top: 0;padding-bottom: 5px;padding-left: 53px;width: 21px;"><img src="loading.gif" /></div>');
+            // Send data to Fusion Tables on submit
+            // TO DO: Do this on ajax form submit instead of right away.
+            var string = String(latlon);
+            string = string.replace("(", "").replace(")", "")
+            var newlatlon = string.split(", ");
+            // lat=&lon=&desc=&safe=&road=&cras=&ageo=&acct=&traf=&roads=&year
+            var nUrl = "http://partners.theglobeandmail.com/interactives/fusiontables/working-poor-ftconnect.php?";
+            nUrl += "table=" + userid + "&method=save&lat=" + newlatlon[0] + "&lon=" + newlatlon[1]; 
+      $.each(formData, function(i, formData){
+        nUrl += "&" + formData.name + "=" + formData.value;
+      });
+      $.get(nUrl, function(){
+            var t=setTimeout('$("#success-message").html(\'Success! Your comment is awaiting moderation.\')', 1500);
+      })
+	  var t=setTimeout('$("#success-message").html(\'Success! Your comment is awaiting moderation.\')', 1500);
+ 	  var u=setTimeout(resetForm, 1500);  
+}
+} // initialize()
+</script>
+</head>
+<body onLoad="initialize()">
+<div id="map-container">
+<div id="map-header">
+	<div id="tab-container">
+		<div id="l"></div>
+		<div class="tab selected tab-first">
+			<a id="guide" class="selected" href="#map">Guided tour<div class="tab-sub">The story behind the data</div></a>
+		</div>
+		<div class="tab"><a id="mapview" href="#map">Explore the data<div class="tab-sub">Census data 2000 to 2005</div></a></div>
+		<div class="tab">
+			<a id="reports" href="#map">Add to this map<div class="tab-sub">Submit your comments</div></a>
+		</div>
+		<div class="tab tab-zoom">
+			<div id="filter-zoom">
+            <h3>Zoom to your area</h3>
+            <input type="text" value="Enter your address or postal code"/><div class="zoom"></div><br />
+        	</div>
+		</div>
+	</div>
+</div><!-- #map-header-->
+<div id="legend-container">
+    <div id="legend">
+        <h2>Adjust the filters</h2>
+        <p>Explore the data using filters below. Click an area on the map for more detail.</p>
+        <div class="filter-box filter-map">
+        <h3>Percentage of working poor in Toronto</h3>
+        <ul>
+            <li class="toggle-gen selected"><a href="#">General population</a></li>
+            <li class="toggle-im"><a href="#">Immigrant population</a></li>
+        </ul>
+        <div class="filter-years">
+        <h3>Census years</h3>
+            <div class="year-slider slider-filter-gen-im"></div>
+            <div class="filter-tip filter-year-tip">2000</div>
+        </div>
+          <hr />
+        <h3>Percentage of working poor in GTA</h3>
+        <ul>   
+            <li class="toggle-gta"><a href="#">General population</a></li>
+        </ul>
+        <div class="filter-years">
+        <h3>Census years</h3>
+            <div class="year-slider slider-filter-gta"></div>
+            <div class="filter-tip filter-year-tip">2000</div>
+        </div>
+        <hr />
+        <h3>Where immigrants reside</h3>
+        <ul>   
+            <li class="toggle-im-set"><a href="#">Immigrant settlement</a></li>
+        </ul>
+        <hr />
+        <div class="filter-layer">
+            <h3>Toggle other layers</h3>
+            <input type="checkbox">TTC subways</input>
+        </div>
+		</div>
+	</div>
+    <div id="legend-reader">
+        
+        <form class="inner-user-form">
+            <h2>Add your comment</h2>
+            <ol>
+            	<li>1. Click the <a href="#" class="marker-activate">marker icon</a> and drop a point on the map</li>
+            	<li>2. Share your comment about the area.</li>
+            </ol>
+            <hr />
+
+        <table>
+            <tr><td class="user-label" colspan="2">Description:</td></tr><tr><td colspan="2"><textarea name="desc"></textarea></td></tr>
+            <tr><td colspan=2><hr /></td></tr>
+            <tr><td class="user-label">Name</td><td><input type="text" name="name" /></td></tr>
+            <tr><td class="user-label">Age</td><td><input type="text" name="age" /></td></tr>
+        <tr><td colspan=2><hr /></td></tr>
+            <tr><td colspan="2">If you want us to follow up, provide your contact information<br /><small>Contact information will not be shown</small></td></tr>
+            <tr><td class="user-label">Phone</td><td><input type="text" name="phone" /></td></tr>
+            <tr><td class="user-label">Email</td><td><input type="text" name="email" /></td></tr>
+            <tr><td colspan=2><hr /></td></tr>
+        <tr><td class="user-label" style="width:75%"><div id="success-message"></div></td><td><input style="float:right" type="submit" name="submit" value="Submit" /></td></tr>
+
+        </table>
+    
+    </form>
+    </div>
+    <div id="legend-guide">
+		<div id="legend-header">
+			<div id="nav-count"><span id="nav-now">1</span> of <span id="nav-max"></span></div>
+			<div id="nav-controls">
+				<a class="legend-nav nav-button" id="nav-prev" href="#prev">Previous<span></span></a>
+				<a class="legend-nav nav-button" id="nav-next" href="#next">Next<span></span></a>
+			</div>
+		</div>
+		<div class="legend-slide active">
+			<h2>The changing face of working poverty</h2>
+		These maps show the change in working poor as a percentage of the total working-age population of each of Toronto's census tracts. 
+        <p>While areas with a significant percentage of the working poor are scattered all over the city, the maps demonstrate a shift to the city's east end: The majority of Toronto's census tracts that saw the sharpest increases in working poverty are east of the Don Valley.</p>
+        <div class="filter-box filter-map">
+        <h3>Toggle between censuses of working poor</h3>
+        <ul>
+            <li class="selected toggle-gen"><a href="#">General population</a></li>
+            <li class="toggle-im"><a href="#">Immigrant population</a></li>
+        </ul>
+        <div class="filter-years">
+            <h3>Toggle between years</h3>
+            <div class="year-slider slider-filter-gen-im"></div>
+            <div class="filter-tip filter-year-tip">2000</div>
+        </div>	
+        </div>
+		</div>
+		<div class="legend-slide">
+			<h2>A shift eastward</h2>
+        Here is the same map for the general population only, centred on the east side of Toronto where a significant percentage of the working poor live. See this change by toggling the years below.
+		<div class="filter-box filter-years">
+            <h3>Toggle between years</h3>
+            <div class="year-slider slider-filter-gen-im"></div>
+            <div class="filter-tip filter-year-tip">2000</div>
+        </div>
+		<p>Lower prices and towering, decades-old rental buildings make the sprawling residential areas an affordable place to live.</p>
+		<p>A lack of transit, compared to much of the rest of the city, also makes the east end more affordable but makes it difficult to get from one place to another - to school, to childcare, or to work. After demonstrated support this week for a plan put forward by Toronto Transit Commission Chair Karen Stintz, the city's long-stymied transit expansion appears closer to realization.</p>
+		</div>
+
+	<div class="legend-slide">
+			<h2>The Birchmount corridor</h2>
+			<p>This map focuses on the change in working poor along Toronto's north-south Birchmount corridor. The authors of Metcalf's study point to the Birchmount corridor first and foremost to illustrate the challenges facing the city's lowest-earning workers. See this change by toggling below.</p>
+			<div class="filter-box filter-years">
+            <h3>Toggle between years:</h3>
+            <div class="year-slider slider-filter-gen-im"></div>
+            <div class="filter-tip filter-year-tip">2000</div>
+			</div>
+			<p>The strip runs from Steeles to the water, through several priority neighbourhoods - Steeles L'Amoreaux, Dorset Park and Kennedy Park. These are pockets of poverty Toronto designated years ago as areas that need to be better served by municipal resources.</p>
+			<p>Targeting resources to community groups in areas like Steeles L'Amoreaux has paid off. But this corridor still lacks some of the most basic local services - namely transit: Residents say there aren't enough buses, their routes are limited and getting anywhere by transit is a slog.</p>
+	</div>
+		<div class="legend-slide" id="guide-years">
+			<h2>In the suburbs</h2>
+			In this view, we've stepped back to show which cities in the Toronto area have seen the greatest increase in working poor as a percentage of the total working-age population. Municipalities around the Toronto area had by far the highest growth rate in working poverty among working-age residents. See this change by toggling below. 
+		<div class="filter-box filter-years">
+            <h3>Toggle between years</h3>
+            <div class="year-slider slider-filter-gta"></div>
+            <div class="filter-tip filter-year-tip">2000</div>
+        </div>			
+<p>This is in large part because those levels were so low to begin with. But the growth of working poverty in formerly affluent bedroom communities is significant. In some cases, it's been exacerbated by factory closures.</p>
+<p>Many of these more suburban communities have fewer resources when it comes to public transit and social services. In Markham, Milton and Mississauga, the ranks of the working poor grew by more than 60 per cent in five years. In Richmond Hill, the increase was 73 per cent; in Uxbridge it almost doubled.</p>
+		</div>
+		<div class="legend-slide">
+			<h2>Immigrant settlement</h2>
+			This map shows data compiled by York University's Toronto Immigrant Employment Data Initiative, demonstrating which census tracts received the most immigrants between 1996 and 2006.
+			<p>Some of the suburban municipalities where working poverty increased the most also hosted the biggest share of new immigrants in the preceding decade. According to researchers at York University, many of the top 15 census tracts for new immigrants between 1996 and 2006 were in Mississauga, Brampton, Vaughan and Markham.</p>
+       <div class="filter-box filter-map">
+        <h3>Toggle between immigrant layers</h3>
+        <ul>
+            <li class="toggle-im-set selected"><a href="#">Immigrant settlement</a></li>
+            <li class="toggle-im"><a href="#">Percentage of working poor immigrants</a></li>
+        </ul>
+       </div>
+		</div>
+		<div class="legend-slide">
+        <h2>The view from 2012</h2>
+        <h3><img src="large_blue-sm.png" /> A slice of Scarborough</h3>
+This Scarborough neighbourhood has had the worst levels of working poverty in Toronto - despite having an educated population: Almost 37 per cent of those over 15 have a university diploma or degree. 
+<p>"I've always seen it in our ward ... employment is a huge issue in our area," says Councillor Michelle Berardinetti, who remembers snaking lines of unemployed outside the office of her husband Lorenzo Berardinetti, the area's provincial representative, almost as soon as the recession hit in late 2008. </p>
+<p>"I wouldn’t say it's really gotten better. People are still finding it hard to find good employment."</p>
+        <h3>Toggle between 2005 censuses</h3>
+        <div class="filter-box filter-map">
+        <ul>
+            <li class="selected toggle-gen"><a href="#">General population</a></li>
+            <li class="toggle-im"><a href="#">Immigrant population</a></li>
+        </ul>
+       </div>
+		</div>
+        <div class="legend-slide">
+        <h2>Neighbourhood-level studies</h2>
+        <h3><img src="large_blue-sm.png" /> Eastern downtown<br />
+        <img src="green-dot-sm.png" /> Weston Mount Dennis</h3>
+Researchers at Ryerson University and the Wellesley Institute are trying to figure out how precarious employment affects neighbourhoods. Toronto's Eastern downtown is a gritty few blocks in a gentrifying area; Weston Mount Dennis has been hard hit recently by a series of industrial closures and loss of jobs in the area. 
+<p>"We're interested in understanding how the experience of precarious employment impacts livelihood," says Ryerson professor Grace-Edward Galabuzi. "Are there services in the neighbourhood, economic opportunities in the neighbourhood, that could mitigate some of that precariousness?"</p>
+<p>The working hypothesis, he says, is that unstable work affects individuals and families but it also undermines a community's coping mechanisms.</p>
+<h3>Toggle between 2005 censuses</h3>
+        <div class="filter-box filter-map">
+        <ul>
+            <li class="selected toggle-gen"><a href="#">General population</a></li>
+            <li class="toggle-im"><a href="#">Immigrant population</a></li>
+        </ul>
+       </div>
+		</div>
+	</div>
+</div>
+	<div id="legend-colours">
+        <div class="legend1">
+            <h3>Concentration of working poor</h3>
+            <ul class="legend1">
+                <li><div class="colour0"></div>0% to 5%</li>
+                <li><div class="colour1"></div>5% to 10%</li>
+                <li><div class="colour2"></div>10% to 15%</li>
+                <li><div class="colour3"></div>15% to 20%</li>
+                <li><div class="colour4"></div>More than 20%</li>
+            </ul>
+        </div>
+        <div class="legend2">
+            <h3>Change between 2000 and 2005</h3>
+            <ul class="legend2">
+                <li><div class="colour5"></div>Decrease</li>
+                <li><div class="colour1"></div>Increase up to 5%</li>
+                <li><div class="colour2"></div>Increase 5 to 10%</li>
+                <li><div class="colour4"></div>Increase more than 10%</li>
+            </ul>
+        </div>
+        <div class="legend3">
+            <h3>Concentration of working poor</h3>
+            <ul class="legend3">
+                <li><div class="colour0"></div>1% to 3%</li>
+                <li><div class="colour1"></div>3% to 5%</li>
+                <li><div class="colour2"></div>5% to 8%</li>
+                <li><div class="colour3"></div>More than 8%</li>
+            </ul>
+        </div>
+        <div class="legend4">
+            <h3>Number of immigrants arriving</h3>
+            <ul class="legend4">
+                <li><div class="colour0"></div>0 to 1,000 people</li>
+                <li><div class="colour1"></div>1,000 to 2,000 people</li>
+                <li><div class="colour2"></div>2,000 to 3,000 people</li>
+                <li><div class="colour3"></div>3,000 to 4,000 people</li>
+                <li><div class="colour4"></div>5,000 or more people</li>
+            </ul>
+        </div>
+    </div>
+<div id="map_canvas"></div>
+</div>
+<div class="tgam-credits-container">
+<div class="tgam-credits">
+<div style="float:left; width:422px;text-align:left;">
+    <div id="metcalf"><strong>Sources</strong>: Statistics Canada, Special Tabulations.<br />Cities Centre, University of Toronto Metcalf Foundation, 2012.</div>
+    <div id="yorku"><strong>Source</strong>: York University's Toronto Immigrant Employment Data Initiative</div>
+</div>
+Interactive by <a href="mailto:sathompson@globeandmail.com">Stuart A. Thompson</a>
+</div>
+</div>
+</html>
